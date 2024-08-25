@@ -24,7 +24,7 @@ class ViewController: NSViewController {
     // MARK: - Properties
     private lazy var osNumber = ProcessInfo.processInfo.operatingSystemVersionString
     private let modelID = "Mac", ocLevel = "Unknown", ocVersionID = "Version"
-    
+    private var blstr = ""
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +112,15 @@ class ViewController: NSViewController {
     
     // MARK: - IBActions
     @IBAction func hideSerialNumber(_ sender: NSButton) {
-        serialNumber.stringValue = (serialNumber.stringValue == "▇▇▇▇▇▇▇▇") ? HCSerialNumber.shared.getSerialNumber() : "▇▇▇▇▇▇▇▇"
+        serialNumber.stringValue = (serialNumber.stringValue == "            ") ? HCSerialNumber.shared.getSerialNumber() : "            "
     }
     
     @IBAction func hideBlVersion(_ sender: NSButton) {
         if (blPrefix.stringValue == "") {
-            blPrefix.stringValue = "Bootloader"
+            blPrefix.stringValue = self.blstr
             blVersion.stringValue = HCBootloader.shared.getBootloader()
         } else {
+            self.blstr = blPrefix.stringValue
             blPrefix.stringValue = ""
             blVersion.stringValue = ""
         }
